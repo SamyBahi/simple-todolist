@@ -6,6 +6,8 @@ const AddTodo = (props) => {
   const addTodoHandler = (event) => {
     event.preventDefault();
 
+    if (!title) return;
+
     const todoData = {
       id: Math.random().toString(),
       title: title,
@@ -31,8 +33,9 @@ const AddTodo = (props) => {
             ></input>
           </div>
           <div>
-            {}
-            <button onClick={addTodoHandler}>Add</button>
+            <button onClick={addTodoHandler} disabled={!title}>
+              Add
+            </button>
           </div>
         </div>
       </form>
