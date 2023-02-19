@@ -21,15 +21,26 @@
 }
 
 .add-todo__button {
+  /*border: 2px solid aquamarine;*/
   border: none;
-  background-color: transparent;
-  border: 2px solid aquamarine;
   background-color: aquamarine;
   color: #181820;
   border-radius: 8px;
   width: 100%;
   height: 100%;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 7px;
+  justify-content: center;
+  transition: 200ms;
+}
+
+.add-todo__button:disabled {
+  border: none;
+  background-color: rgba(127, 255, 212, 0.707);
+  transition: 200ms;
 }
 
 .add-todo__text {
