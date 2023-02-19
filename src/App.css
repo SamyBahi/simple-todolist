@@ -20,3 +20,27 @@
   display: flex;
   justify-content: center;
 }
+
+@media only screen and (min-width: 768px) {
+  .app {
+    width: 75%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .app {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .app {
+    width: 35%;
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  .app {
+    width: 25%;
+  }
+}
