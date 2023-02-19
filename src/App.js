@@ -3,6 +3,7 @@ import { useState } from "react";
 import Todo from "./components/Todos/Todo";
 import AddTodo from "./components/AddTodo/AddTodo";
 import Completed from "./components/Todos/Completed";
+import "./App.css";
 
 const staticTodos = [
   {
@@ -48,6 +49,22 @@ const App = (props) => {
     });
   };
 
+  const uncompleteTodoHandler = (uncompletedItem) => {
+    setTodos((prevTodos) => {
+      return [uncompletedItem, ...prevTodos];
+    });
+
+    setCompleted((prevCompleted) => {
+      return prevCompleted.filter((completed) => {
+        if (completed.id === uncompletedItem.id) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+    });
+  };
+
   const deleteTodoHandler = (completedItemId) => {
     setCompleted((prevCompleted) => {
       return prevCompleted.filter((todo) => {
@@ -61,11 +78,17 @@ const App = (props) => {
   };
 
   return (
-    <div>
-      <AddTodo onAddTodo={addTodoHandler} />
-      <br></br>
-      <Todo items={todos} onCheckTodo={completeTodoHandler} />
-      <Completed items={completed} onDeleteCompleted={deleteTodoHandler} />
+    <div className="container">
+      <main className="app">
+        <h1 id="page-title">Todos.</h1>
+        <AddTodo onAddTodo={addTodoHandler} />
+        <Todo items={todos} onCheckTodo={completeTodoHandler} />
+        <Completed
+          items={completed}
+          onDeleteCompleted={deleteTodoHandler}
+          onCheckTodo={uncompleteTodoHandler}
+        />
+      </main>
     </div>
   );
 };

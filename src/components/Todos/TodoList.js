@@ -1,5 +1,6 @@
 import React from "react";
 import TodoItem from "./TodoItem";
+import styles from "./TodoList.module.css";
 
 const TodoList = (props) => {
   const checkTodoHandler = (completedItem) => {
@@ -12,7 +13,7 @@ const TodoList = (props) => {
 
   return (
     <div>
-      <ul>
+      <ul class={styles["todo-list"]}>
         {props.items.map((item) => {
           return (
             <TodoItem

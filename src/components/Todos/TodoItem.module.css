@@ -1,0 +1,50 @@
+.todo-card {
+  background-color: #21212b;
+  height: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #bfbfc2;
+  font-weight: 300;
+}
+
+.todo-card__left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.todo-card__right {
+  display: flex;
+  align-items: center;
+}
+
+.todo-checkbox {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-color: aquamarine;
+  border: 2px solid aquamarine;
+  border-radius: 8px;
+  transition: 10s;
+  cursor: pointer;
+}
+
+.todo-checkbox:checked {
+  background-color: aquamarine;
+}
+
+.todo-delete {
+  justify-self: flex-end;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
+}
+
+.label__completed {
+  text-decoration: line-through;
+}

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import styles from "./AddTodo.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const AddTodo = (props) => {
   const [title, setTitle] = useState("");
@@ -14,6 +17,7 @@ const AddTodo = (props) => {
     };
 
     props.onAddTodo(todoData);
+    setTitle("");
   };
 
   const titleChangeHandler = (event) => {
@@ -21,21 +25,26 @@ const AddTodo = (props) => {
   };
 
   return (
-    <div>
+    <div className={styles["add-todo__card"]}>
       <form>
-        <div>
+        <div className={styles["add-todo__form"]}>
+          <div className={styles["button-container"]}>
+            <button
+              onClick={addTodoHandler}
+              disabled={!title}
+              className={styles["add-todo__button"]}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
           <div>
-            <label>Todo name</label>
             <input
               type="text"
               value={title}
               onChange={titleChangeHandler}
+              className={styles["add-todo__text"]}
+              placeholder="Add task"
             ></input>
-          </div>
-          <div>
-            <button onClick={addTodoHandler} disabled={!title}>
-              Add
-            </button>
           </div>
         </div>
       </form>
