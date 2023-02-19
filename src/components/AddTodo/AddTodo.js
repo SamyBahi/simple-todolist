@@ -33,6 +33,7 @@ const AddTodo = (props) => {
               onClick={addTodoHandler}
               disabled={!title}
               className={styles["add-todo__button"]}
+              aria-label="add"
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>

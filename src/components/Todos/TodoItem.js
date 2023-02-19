@@ -30,7 +30,9 @@ const TodoItem = (props) => {
               checked
               className={styles["todo-checkbox"]}
             ></input>
-            <label className={styles["label__completed"]}>{props.title}</label>
+            <label htmlFor={props.id} className={styles["label__completed"]}>
+              {props.title}
+            </label>
           </div>
           <div className={styles["todo-card__right"]}>
             <button className={styles["todo-delete"]}>
@@ -52,7 +54,7 @@ const TodoItem = (props) => {
             onChange={checkboxChangeHandler}
             className={styles["todo-checkbox"]}
           ></input>
-          <label>{props.title}</label>
+          <label htmlFor={props.id}>{props.title}</label>
         </div>
       </div>
     </li>

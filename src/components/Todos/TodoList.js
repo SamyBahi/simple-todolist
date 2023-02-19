@@ -13,7 +13,7 @@ const TodoList = (props) => {
 
   return (
     <div>
-      <ul class={styles["todo-list"]}>
+      <ul className={styles["todo-list"]}>
         {props.items.map((item) => {
           return (
             <TodoItem
