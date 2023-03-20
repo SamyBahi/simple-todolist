@@ -1,31 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Todo from "./components/Todos/Todo";
 import AddTodo from "./components/AddTodo/AddTodo";
 import Completed from "./components/Todos/Completed";
-import "./App.css";
-
-const staticTodos = [
-  {
-    id: "todo1",
-    title: "Faire la vaisselle",
-    checked: false,
-  },
-  {
-    id: "todo2",
-    title: "Vendre mon micro",
-    checked: false,
-  },
-  {
-    id: "todo3",
-    title: "Acheter un rasoir",
-    checked: false,
-  },
-];
+import styles from "./App.module.css";
+import useHttp from "./hooks/use-http";
+import Spinner from "./components/UI/Spinner";
 
 const App = (props) => {
-  const [todos, setTodos] = useState(staticTodos);
+  const [todos, setTodos] = useState([]);
   const [completed, setCompleted] = useState([]);
+
+  const { isLoading, httpError, sendRequest } = useHttp();
+
+  useEffect(() => {
+    const sortTasks = (data) => {
+      const loadedTodos = [];
+      const loadedChecked = [];
+
+      for (const key in data) {
+        if (data[key]["checked"]) {
+          loadedChecked.unshift({ id: key, ...data[key] });
+        } else {
+          loadedTodos.unshift({ id: key, ...data[key] });
+        }
+      }
+      setTodos(loadedTodos);
+      setCompleted(loadedChecked);
+    };
+
+    sendRequest(
+      {
+        url: "https://todos-af4a4-default-rtdb.europe-west1.firebasedatabase.app/todos.json",
+      },
+      sortTasks
+    );
+  }, [sendRequest]);
 
   const addTodoHandler = (todoItem) => {
     setTodos((prevTodos) => {
@@ -77,17 +87,35 @@ const App = (props) => {
     });
   };
 
+  const nonEmptyList = todos.length !== 0 || completed.length !== 0;
+
+  const loadedContent = (
+    <>
+      <Todo items={todos} onCheckTodo={completeTodoHandler} />
+      <Completed
+        items={completed}
+        onDeleteCompleted={deleteTodoHandler}
+        onCheckTodo={uncompleteTodoHandler}
+      />
+    </>
+  );
+
+  const isLoadingContent = (
+    <div className={styles["loading-container"]}>
+      <Spinner />
+    </div>
+  );
+
+  const httpErrorContent = <p>{httpError}</p>;
+
   return (
-    <div className="container">
-      <main className="app">
-        <h1 id="page-title">Todos.</h1>
+    <div className={styles["container"]}>
+      <main className={styles["app"]}>
+        <h1 id={styles["page-title"]}>Todos.</h1>
         <AddTodo onAddTodo={addTodoHandler} />
-        <Todo items={todos} onCheckTodo={completeTodoHandler} />
-        <Completed
-          items={completed}
-          onDeleteCompleted={deleteTodoHandler}
-          onCheckTodo={uncompleteTodoHandler}
-        />
+        {isLoading && isLoadingContent}
+        {!isLoading && httpError && httpErrorContent}
+        {!isLoading && !httpError && nonEmptyList && loadedContent}
       </main>
     </div>
   );

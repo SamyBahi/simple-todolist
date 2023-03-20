@@ -1,3 +1,9 @@
+.add-todo__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .add-todo__card {
   width: 100%;
   display: flex;
@@ -10,6 +16,7 @@
   padding: 12px;
   display: flex;
   align-items: center;
+  width: 100%;
   gap: 10px;
 }
 
@@ -47,8 +54,28 @@
   background-color: transparent;
   border: none;
   color: #bfbfc2;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 93%;
 }
 
 .add-todo__text:focus {
   outline: none;
+}
+
+.add-todo__modal {
+  width: 95%;
+  margin: 10px 0px 20px 0px;
+}
+
+.add-todo__text__container {
+  display: flex;
+  width: 100%;
+}
+
+.loading-container {
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-self: center;
+  flex-basis: 3%;
 }
