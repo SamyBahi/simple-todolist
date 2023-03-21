@@ -6,6 +6,7 @@ import Completed from "./components/Todos/Completed";
 import styles from "./App.module.css";
 import useHttp from "./hooks/use-http";
 import Spinner from "./components/UI/Spinner";
+import { isElementType } from "@testing-library/user-event/dist/utils";
 
 const App = (props) => {
   const [todos, setTodos] = useState([]);
@@ -20,13 +21,21 @@ const App = (props) => {
 
       for (const key in data) {
         if (data[key]["checked"]) {
-          loadedChecked.unshift({ id: key, ...data[key] });
+          loadedChecked.push({ id: key, ...data[key] });
         } else {
-          loadedTodos.unshift({ id: key, ...data[key] });
+          loadedTodos.push({ id: key, ...data[key] });
         }
       }
-      setTodos(loadedTodos);
-      setCompleted(loadedChecked);
+      setTodos(
+        loadedTodos.sort(function (a, b) {
+          return new Date(b.lastModified) - new Date(a.lastModified);
+        })
+      );
+      setCompleted(
+        loadedChecked.sort(function (a, b) {
+          return new Date(b.lastModified) - new Date(a.lastModified);
+        })
+      );
     };
 
     sendRequest(
@@ -87,8 +96,6 @@ const App = (props) => {
     });
   };
 
-  const nonEmptyList = todos.length !== 0 || completed.length !== 0;
-
   const loadedContent = (
     <>
       <Todo items={todos} onCheckTodo={completeTodoHandler} />
@@ -107,15 +114,14 @@ const App = (props) => {
   );
 
   const httpErrorContent = <p>{httpError}</p>;
-
   return (
     <div className={styles["container"]}>
       <main className={styles["app"]}>
         <h1 id={styles["page-title"]}>Todos.</h1>
         <AddTodo onAddTodo={addTodoHandler} />
+        {!isLoading && !httpError && loadedContent}
         {isLoading && isLoadingContent}
         {!isLoading && httpError && httpErrorContent}
-        {!isLoading && !httpError && nonEmptyList && loadedContent}
       </main>
     </div>
   );

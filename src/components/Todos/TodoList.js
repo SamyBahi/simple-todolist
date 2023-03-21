@@ -3,14 +3,6 @@ import TodoItem from "./TodoItem";
 import styles from "./TodoList.module.css";
 
 const TodoList = (props) => {
-  const checkTodoHandler = (completedItem) => {
-    props.onCheckTodo(completedItem);
-  };
-
-  const deleteCompletedHandler = (completedItemId) => {
-    props.onDeleteCompleted(completedItemId);
-  };
-
   return (
     <div>
       <ul className={styles["todo-list"]}>
@@ -21,8 +13,8 @@ const TodoList = (props) => {
               id={item.id}
               title={item.title}
               checked={item.checked}
-              onCheckTodo={checkTodoHandler}
-              onDeleteCompleted={deleteCompletedHandler}
+              onCheckTodo={props.onCheckTodo}
+              onDeleteCompleted={props.onDeleteCompleted}
             ></TodoItem>
           );
         })}

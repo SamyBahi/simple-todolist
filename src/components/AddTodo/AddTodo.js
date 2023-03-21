@@ -33,6 +33,7 @@ const AddTodo = (props) => {
         body: {
           checked: false,
           title: taskTitle,
+          lastModified: new Date().toISOString(),
         },
       },
       createTask.bind(null, taskTitle)
